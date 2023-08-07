@@ -49,8 +49,6 @@ export class InvoiceModel {
   }
 }
 
-
-
 export interface InvoiceContents {
   driverName: string
   driverNumber: string;
@@ -81,12 +79,28 @@ export class InvoiceContents2 {
   constructor(
     private billingContactName: string,
     private billingContactPhone: string,
-    private invoiceNumber: string,
     private paymentMethod: string,
     private serviceType: string,
     private eventDate: string,
-    private billingItems: BillingItem2[]
+    public invoiceNumber: string,
+    public billingItems: BillingItem2[]
   ) { }
+}
+
+export class InvoiceContents2Display extends InvoiceContents2 {
+  totalCost: number;
+
+  doTheMath() {
+    // Add up all the costs
+    const billingSum = this.billingItems.filter((item) => item.cost).reduce((a, b) => a + b.cost, 0);
+
+    // Remove discounts
+    const discount = this.billingItems.filter((item) => item.discount).reduce((a, b) => a + b.discount, 0);
+    let totalDiscount = (discount / 100) * billingSum
+    
+    // Total
+    this.totalCost = billingSum - totalDiscount
+  }
 }
 
 export interface BillingItem2 {

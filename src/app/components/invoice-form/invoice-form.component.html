@@ -60,9 +60,9 @@
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="input-group unset-width col m-2">
           <div class="form-floating">
-            <input type="text" class="form-control" id="pickupDate" [ngModelOptions]="{standalone: true}" [(ngModel)]="pickUpDate" placeholder="Pick up Date" type="text" ngbDatepicker
+            <input type="text" class="form-control" id="eventDateModel" [ngModelOptions]="{standalone: true}" [(ngModel)]="eventDateModel" placeholder="Pick up Date" type="text" ngbDatepicker
               #d="ngbDatepicker">
-            <label for="pickupDate">Event Date</label>
+            <label for="eventDateModel">Event Date</label>
           </div>
           <span (click)="d.toggle()" class="input-group-text">
             <i class="bi bi-calendar-date"></i>

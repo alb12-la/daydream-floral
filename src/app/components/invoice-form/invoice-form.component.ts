@@ -12,7 +12,7 @@ export class InvoiceFormComponent implements OnInit {
   invoiceForm: FormGroup;
   constructor(private fb: FormBuilder) { }
   pickUpTime = {};
-  pickUpDate = {};
+  eventDateModel = {};
   showModal = false;
   displayDriverForm = false;
   displayMoreBillingOptions = false;
@@ -74,16 +74,10 @@ export class InvoiceFormComponent implements OnInit {
 
 
   exportToPdf() {
-    // TODO- Loop through. If it has a date convert it. 
-    // Manually get date from form
-    this.invoiceForm.controls['pickupDate'].setValue(
-      this.convertDateStructToString(this.pickUpDate)
+    // Transform and insert any dateModels into form
+    this.invoiceForm.controls['eventDate'].setValue(
+      this.convertDateStructToString(this.eventDateModel)
     )
-
-    this.invoiceForm.controls['pickupTime'].setValue(
-      this.convertTimeStructToString(this.pickUpTime)
-    )
-
     // Send up
     this.finishedForm.emit(this.invoiceForm);
   }
