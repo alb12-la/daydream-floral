@@ -1,0 +1,161 @@
+<div class="container mt-5">
+  <div class="d-flex flex-row justify-content-between align-items-center mb-5">
+    <img width="150px" src="../../../assets/images/logo.png">
+    <h1>Invoice</h1>
+  </div>
+
+
+  <div class="d-flex flex-row justify-content-between mb-5">
+    <!-- From -->
+    <div class="max-w-200">
+      <strong>Ana Karen Mosco</strong>
+      <div>(626)353-9374</div>
+      <div>mydaydreamflorals@gmail</div>
+      <div>@daydreamflorals</div>
+    </div>
+
+    <!-- Bill to -->
+    <div class="max-w-200">
+      <strong>Bill To</strong>
+      <div>{{invoiceContents.billingContactName}}</div>
+      <div>{{invoiceContents.billingContactPhone}}</div>
+    </div>
+  </div>
+
+  <!-- Details -->
+  <div class="d-flex flex-row justify-content-between mb-4">
+    <table class="table-sm borderless">
+      <tbody>
+        <tr>
+          <th>Pick-up Date:</th>
+          <td>{{invoiceContents.pickupDate}}</td>
+        </tr>
+
+        <tr>
+          <th>Pick-up Time:</th>
+          <td>{{invoiceContents.pickupTime}}</td>
+        </tr>
+
+        <tr>
+          <th>Passenger:</th>
+          <td>{{invoiceContents.passengerName}}</td>
+        </tr>
+
+        <tr>
+          <th>No. of Passengers:</th>
+          <td>{{invoiceContents.numberOfPassengers}}</td>
+        </tr>
+
+        <tr>
+          <th>Phone number:</th>
+          <td>{{invoiceContents.passengerPhone}}</td>
+        </tr>
+
+        <tr *ngIf="invoiceContents.driverName">
+          <th>Driver:</th>
+          <td>{{invoiceContents.driverName}}<span *ngIf="invoiceContents.driverNumber" class="ml-1"> - {{invoiceContents.driverNumber}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <table class="table-sm borderless">
+      <tbody>
+        <tr>
+          <th>Invoice #</th>
+          <td>{{invoiceContents.invoiceNumber}}</td>
+        </tr>
+        <tr>
+          <th>Vehicle Type:</th>
+          <td>SUV</td>
+        </tr>
+
+
+        <tr>
+          <th>Service Type:</th>
+          <td>{{invoiceContents.serviceType}}</td>
+        </tr>
+
+        <tr>
+          <th>Payment Method:</th>
+          <td>{{invoiceContents.paymentMethod}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Trip Details -->
+  <div class=" mb-5">
+    <table class="table-sm borderless">
+      <tbody>
+        <tr>
+          <th>Pickup:</th>
+          <td>{{invoiceContents.pickupLocation}}</td>
+        </tr>
+        <tr>
+          <th>Drop Off:</th>
+          <td>{{invoiceContents.dropoffLocation}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- Services -->
+  <h3>Services Rendered</h3>
+  <table class="table border">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let item of this.invoiceContents.billingItems">
+        <tr>
+          <td class="text-capitalize">{{item.description}}</td>
+          <td *ngIf="item?.cost">${{item.cost}}</td>
+          <td *ngIf="item?.discount">{{item.discount}}%</td>
+        </tr>
+      </ng-container>
+    </tbody>
+
+  </table>
+
+  <div class="d-flex justify-content-end">
+    <table class="table total-due">
+      <thead>
+        <tr>
+          <th>Total Due</th>
+          <th>${{invoiceContents.totalCost}}</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+
+
+  <h6>Terms & Conditions/Reservation Agreement:</h6>
+  <small>
+
+    Reservation Agreement:
+    1. All deposits are NON refundable if reservation is cancelled within 24HRS of starting.
+    2. Alberto's Transportation Services LLC is not liable in the event of mechanical breakdown while on charter and will only be responsible for making up lost time at a mutually agreed date.
+    3. The client assumes full financial liability for any damage to the limousine caused during the duration of the rental by them or any members of their party.
+    A. fee of $100.00 for each carpet or seat burn.
+    B. Sanitation fee is $350.00. Drug use is prohibited by law. Any fines will be paid for by the customer on the spot.
+    C. The driver has the right to terminate run without refund (if there is blatant indiscretion on the part of the client(s)).
+    D. It is Illegal to stand or hang through the window or emergency hatch.
+    E. Smoking is not permitted in any of our limousines and this is left to the discretion of the driver.
+    4. Overtime pay will apply after the first 15 minutes of prearranged time described on the run sheet.
+    5. Not responsible for delays or the termination in winter caused by unsafe road conditions (ie. not salted, accidents, etc.).
+    6. Not responsible for articles left in the limousine. 7. Balances to be paid to the driver on the run date before the beginning of the run.
+    8. Vehicles cannot be loaded beyond seating capacity.
+    9. If you are a farm out company and you give your business card to Alberto's Transportation Services LLC client, you are subject to forfeiture of all cost related to this pick up.
+    10.Client is responsible for all tolls and events parking fees during client reservation.
+
+  </small>
+
+
+</div>

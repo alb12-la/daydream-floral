@@ -1,0 +1,169 @@
+<div class="container">
+  <form [formGroup]="invoiceForm">
+    <!-- DRIVER INFO
+    <div class="d-flex flex-row align-items-center mt-3 mb-2">
+      <h3 class="">Driver Information</h3>
+
+      <div class="form-check form-switch mx-3">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" (click)="onDriverFormToggle()" [checked]="displayDriverForm">
+      </div>
+    </div>
+
+    <div *ngIf="displayDriverForm" class="d-flex flex-row justify-content-between">
+      <div class="d-flex flex-row col">
+        <div class="form-floating m-2 col">
+          <input type="text" class="form-control" id="driverName" formControlName="driverName" placeholder="Driver Name">
+          <label for="driverName">Driver Name</label>
+        </div>
+
+        <div class="form-floating m-2 col">
+          <input type="text" class="form-control" id="driverNumber" formControlName="driverNumber" placeholder="Driver Phone">
+          <label for="driverNumber">Driver Phone Number</label>
+        </div>
+      </div>
+    </div> -->
+
+
+    <!-- BILLING INFO -->
+    <h3 class="mt-3 mb-2">Billing Information</h3>
+    <div class="d-flex flex-row justify-content-between">
+
+      <!-- row -->
+      <div class="d-flex flex-column col">
+        <div class="form-floating m-2 ">
+          <input type="text" class="form-control" id="billingContactName" formControlName="billingContactName" placeholder="Billing Contact Name">
+          <label for="billingContactName">Billing Contact Name</label>
+        </div>
+
+        <div class="form-floating m-2 ">
+          <input type="text" class="form-control" id="billingContactPhone" formControlName="billingContactPhone" placeholder="Billing Contact Phone">
+          <label for="billingContactPhone">Billing Contact Phone</label>
+        </div>
+      </div>
+
+      <!-- row -->
+      <div class="d-flex flex-column col">
+        <div class="form-floating m-2 ">
+          <input type="text" class="form-control" id="invoiceNumber" formControlName="invoiceNumber" placeholder="Invoice Number">
+          <label for="invoiceNumber">Invoice Number</label>
+        </div>
+
+        <div class="form-floating m-2">
+          <input type="text" class="form-control" id="paymentMethod" formControlName="paymentMethod" placeholder="Payment Method">
+          <label for="paymentMethod">Payment Method</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column">
+      <!-- Pickup -->
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <div class="input-group unset-width col m-2">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="pickupDate" [ngModelOptions]="{standalone: true}" [(ngModel)]="pickUpDate" placeholder="Pick up Date" type="text" ngbDatepicker
+              #d="ngbDatepicker">
+            <label for="pickupDate">Event Date</label>
+          </div>
+          <span (click)="d.toggle()" class="input-group-text">
+            <i class="bi bi-calendar-date"></i>
+          </span>
+        </div>
+
+        <ngb-timepicker [ngModelOptions]="{standalone: true}" id="pickupTime" [(ngModel)]="pickUpTime" [meridian]="false"></ngb-timepicker>
+      </div>
+    </div>
+
+
+
+    <div class="d-flex flex-row align-items-center mt-3 mb-2">
+      <h3>Billable Items</h3>
+
+      <div class="form-check form-switch mx-3">
+        <input class="form-check-input" type="checkbox" role="switch" id="more-billable-items" (click)="toggleMoreBillingOptions()" [checked]="displayDriverForm">
+        <label class="form-check-label" for="more-billable-items">More</label>
+
+      </div>
+    </div>
+
+    <!-- More Billing Options -->
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="!displayMoreBillingOptions" class="m-2 pb-2 border-bottom">
+      <div class="card">
+        <div class="card-body">
+          <button type="button" [disabled]="hasDiscount" class="btn btn-warning" (click)="addDiscount()">Add discount</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Billing items -->
+    <ng-container *ngFor="let fg of billItemsArray.controls; let i = index">
+      <form *ngIf="fg.get('cost') else discount" [formGroup]="fg" class="">
+        <div class="d-flex flex-row ">
+          <!-- Description -->
+          <div class="form-floating m-2 col">
+            <input type="text" class="form-control" [id]="'billing-item-description-' +1" formControlName="description" placeholder="Item Description">
+            <label [for]="'billing-item-description-' +1">Description</label>
+          </div>
+          <!-- Cost -->
+          <div class="form-floating m-2 col">
+            <input type="number" class="form-control" [id]="'billing-item-description-' +1" formControlName="cost" placeholder="Item Cost">
+            <label [for]="'billing-item-cost' +1">Cost</label>
+          </div>
+
+          <!-- Quantity -->
+          <div class="form-floating m-2 col">
+            <input type="number" class="form-control" [id]="'quantity-' +1" formControlName="quantity" placeholder="qty">
+            <label [for]="'quantity-' +1">Quantity</label>
+          </div>
+
+          <!-- Quantity -->
+          <div class="form-floating m-2 col">
+            <input type="number" class="form-control" [id]="'subtotal-' +1" formControlName="subtotal" placeholder="subtotal">
+            <label [for]="'subtotal-' +1">Subtotal</label>
+          </div>
+
+          <!-- Remove -->
+          <button type="button" (click)="removeBillItem(i)" class="btn btn-outline-danger m-2"> <i class="bi bi-x"></i> Remove</button>
+
+        </div>
+      </form>
+
+      <ng-template #discount>
+        <form [formGroup]="fg" class="">
+          <div class="d-flex flex-row ">
+            <!-- Description -->
+            <div class="form-floating m-2 col">
+              <input type="text" class="form-control" [id]="'billing-item-description-' +1" formControlName="description" placeholder="Item Description">
+              <label [for]="'billing-item-description-' +1">Description</label>
+            </div>
+            <!-- Cost -->
+            <div class="form-floating m-2 col">
+              <input type="number" class="form-control" [id]="'discount-' +1" formControlName="discount" placeholder="Discount Percent">
+              <label [for]="'discount-' +1">Discount Percent</label>
+            </div>
+
+            <!-- Remove -->
+            <button type="button" (click)="removeBillItem(i)" class="btn btn-outline-danger m-2"> <i class="bi bi-x"></i> Remove</button>
+
+          </div>
+        </form>
+      </ng-template>
+
+
+    </ng-container>
+    <button type="button" (click)="addBillItem()" class="btn btn-primary m-2">Add Item</button>
+    <!-- Export -->
+    <div class="d-flex flex-row justify-content-end">
+      <button class="btn btn-warning btn-lg" (click)="exportToPdf()">Export PDF</button>
+    </div>
+
+
+    <!-- Debugging
+    <pre>
+      {{this.invoiceForm.value | json}}
+    </pre>
+    -->
+
+
+
+  </form>
+</div>
