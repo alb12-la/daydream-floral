@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { InvoiceContents } from 'src/models/invoiceData.model';
+import { InvoiceContents2Display } from 'src/models/invoiceData.model';
 
 @Component({
   selector: 'app-invoice-display',
@@ -7,7 +7,7 @@ import { InvoiceContents } from 'src/models/invoiceData.model';
   styleUrls: ['./invoice-display.component.scss']
 })
 export class InvoiceDisplayComponent implements OnInit {
-  @Input() invoiceContents: InvoiceContents;
+  @Input() invoiceContents: InvoiceContents2Display;
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.

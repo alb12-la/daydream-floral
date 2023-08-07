@@ -3,10 +3,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { BillItem, InvoiceContents } from 'src/models/invoiceData.model';
-
-
-
+import { BillItem, InvoiceContents2, InvoiceContents2Display } from 'src/models/invoiceData.model';
 
 @Component({
   selector: 'app-root',
@@ -17,57 +14,29 @@ export class AppComponent {
   constructor(private modalService: NgbModal) { }
   display = true;
 
-  invoiceContents: InvoiceContents;
+  InvoiceContents2: InvoiceContents2;
+  invoiceContents2Display: InvoiceContents2Display;
 
   formToDisplay(formGroup: FormGroup, modalContent: any) {
-    this.invoiceContents = {
-      driverName: '',
-      driverNumber: '',
-      billingContactName: formGroup.get('billingContactName')?.value || '',
-      billingContactPhone: '',
-      invoiceNumber: '',
-      paymentMethod: '',
-      serviceType: '',
-      passengerName: '',
-      passengerPhone: '',
-      numberOfPassengers: 0,
-      pickupLocation: '',
-      pickupDate: '',
-      pickupTime: '',
-      dropoffLocation: '',
-      totalCost: 0,
-      billingItems: [],
-    }
-
-    // Get Values
-    this.invoiceContents.driverName = formGroup.get('driverName')?.value;
-    this.invoiceContents.driverNumber = formGroup.get('driverNumber')?.value;
-    this.invoiceContents.billingContactName = formGroup.get('billingContactName')?.value;
-    this.invoiceContents.billingContactPhone = formGroup.controls['billingContactPhone'].value;
-    this.invoiceContents.invoiceNumber = formGroup.controls['invoiceNumber'].value;
-    this.invoiceContents.paymentMethod = formGroup.controls['paymentMethod'].value;
-    this.invoiceContents.serviceType = formGroup.controls['serviceType'].value;
-    this.invoiceContents.passengerName = formGroup.controls['passengerName'].value;
-    this.invoiceContents.passengerPhone = formGroup.controls['passengerPhone'].value;
-    this.invoiceContents.numberOfPassengers = formGroup.controls['numberOfPassengers'].value;
-    this.invoiceContents.pickupLocation = formGroup.controls['pickupLocation'].value;
-    this.invoiceContents.pickupDate = formGroup.controls['pickupDate'].value;
-    this.invoiceContents.pickupTime = formGroup.controls['pickupTime'].value;
-    this.invoiceContents.dropoffLocation = formGroup.controls['dropoffLocation'].value;
-
-    // Calculate total
+    // Prep the billing items
     const billingItemsFormArray = formGroup.controls['billItemsArray'] as FormArray;
     const billingItems: BillItem[] = billingItemsFormArray.value;
-    // Add up all the costs
-    const billingSum = billingItems.filter((item) => item.cost).reduce((a, b) => a + b.cost, 0);
-    // Remove discounts
-    const discount = billingItems.filter((item) => item.discount).reduce((a, b) => a + b.discount, 0);
-    let totalDiscount = (discount / 100) * billingSum
-    const totalCost = billingSum - totalDiscount
 
-
-    this.invoiceContents.totalCost = totalCost;
-    this.invoiceContents.billingItems = billingItems;
+    // Insert
+    this.invoiceContents2Display = new InvoiceContents2Display(
+      formGroup.get('billingContactName')?.value || '',
+      formGroup.get('billingContactPhone')?.value || '',
+      formGroup.get('paymentMethod')?.value || '',
+      formGroup.get('serviceType')?.value || '',
+      formGroup.get('eventDate')?.value || '',
+      formGroup.get('invoiceNumber')?.value || '',
+      billingItems
+    )
+    
+    // Do Math 
+    this.invoiceContents2Display.doTheMath();
+    
+    // Display pop up
     this.modalService.open(modalContent, { fullscreen: true })
   }
 
@@ -80,7 +49,7 @@ export class AppComponent {
       let PDF = new jsPDF('p', 'mm', 'a4', true);
       let position = 10;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save(`invoice-${this.invoiceContents.invoiceNumber}`);
+      PDF.save(`invoice-${this.invoiceContents2Display.invoiceNumber}`);
     });
   }
 }

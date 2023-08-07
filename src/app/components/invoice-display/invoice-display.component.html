@@ -1,11 +1,11 @@
 <div class="container mt-5">
   <div class="d-flex flex-row justify-content-between align-items-center mb-5">
-    <img width="150px" src="../../../assets/images/logo.png">
+    <img width="150px" src="../../../assets/images/daydreamfloral-black.png">
     <h1>Invoice</h1>
   </div>
 
 
-  <div class="d-flex flex-row justify-content-between mb-5">
+  <div class="d-flex flex-row justify-content-between mb-3">
     <!-- From -->
     <div class="max-w-200">
       <strong>Ana Karen Mosco</strong>
@@ -27,34 +27,10 @@
     <table class="table-sm borderless">
       <tbody>
         <tr>
-          <th>Pick-up Date:</th>
-          <td>{{invoiceContents.pickupDate}}</td>
+          <th>Event Date:</th>
+          <td>{{invoiceContents.eventDate}}</td>
         </tr>
 
-        <tr>
-          <th>Pick-up Time:</th>
-          <td>{{invoiceContents.pickupTime}}</td>
-        </tr>
-
-        <tr>
-          <th>Passenger:</th>
-          <td>{{invoiceContents.passengerName}}</td>
-        </tr>
-
-        <tr>
-          <th>No. of Passengers:</th>
-          <td>{{invoiceContents.numberOfPassengers}}</td>
-        </tr>
-
-        <tr>
-          <th>Phone number:</th>
-          <td>{{invoiceContents.passengerPhone}}</td>
-        </tr>
-
-        <tr *ngIf="invoiceContents.driverName">
-          <th>Driver:</th>
-          <td>{{invoiceContents.driverName}}<span *ngIf="invoiceContents.driverNumber" class="ml-1"> - {{invoiceContents.driverNumber}}</span></td>
-        </tr>
       </tbody>
     </table>
 
@@ -65,11 +41,6 @@
           <th>Invoice #</th>
           <td>{{invoiceContents.invoiceNumber}}</td>
         </tr>
-        <tr>
-          <th>Vehicle Type:</th>
-          <td>SUV</td>
-        </tr>
-
 
         <tr>
           <th>Service Type:</th>
@@ -83,23 +54,6 @@
       </tbody>
     </table>
   </div>
-
-  <!-- Trip Details -->
-  <div class=" mb-5">
-    <table class="table-sm borderless">
-      <tbody>
-        <tr>
-          <th>Pickup:</th>
-          <td>{{invoiceContents.pickupLocation}}</td>
-        </tr>
-        <tr>
-          <th>Drop Off:</th>
-          <td>{{invoiceContents.dropoffLocation}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
 
   <!-- Services -->
   <h3>Services Rendered</h3>

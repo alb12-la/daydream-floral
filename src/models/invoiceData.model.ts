@@ -77,11 +77,11 @@ export interface BillItem {
 
 export class InvoiceContents2 {
   constructor(
-    private billingContactName: string,
-    private billingContactPhone: string,
-    private paymentMethod: string,
-    private serviceType: string,
-    private eventDate: string,
+    public billingContactName: string,
+    public billingContactPhone: string,
+    public paymentMethod: string,
+    public serviceType: string,
+    public eventDate: string,
     public invoiceNumber: string,
     public billingItems: BillingItem2[]
   ) { }
