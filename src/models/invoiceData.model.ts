@@ -1,3 +1,4 @@
+import { DecimalPipe, formatNumber } from '@angular/common';
 export class InvoiceModel {
   driverName: string;
   driverNumber: string;
@@ -83,21 +84,27 @@ export class InvoiceContents2 {
     public serviceType: string,
     public eventDate: string,
     public invoiceNumber: string,
-    public billingItems: BillingItem2[]
+    public billingItems: BillingItem2[],
   ) { }
 }
 
 export class InvoiceContents2Display extends InvoiceContents2 {
   totalCost: number;
+  
 
   doTheMath() {
+    // Figure out price per row. 
+    this.billingItems.forEach((item) => {
+        item.subtotal = item.cost * item.quantity
+      })
+
     // Add up all the costs
-    const billingSum = this.billingItems.filter((item) => item.cost).reduce((a, b) => a + b.cost, 0);
+    const billingSum = this.billingItems.filter((item) => item.subtotal).reduce((a, b) => a + b.subtotal, 0);
 
     // Remove discounts
     const discount = this.billingItems.filter((item) => item.discount).reduce((a, b) => a + b.discount, 0);
     let totalDiscount = (discount / 100) * billingSum
-    
+
     // Total
     this.totalCost = billingSum - totalDiscount
   }
@@ -107,6 +114,7 @@ export interface BillingItem2 {
   description: string,
   cost?: number,
   quantity?: number,
+  subtotal?: number,
   discount?: number
 }
 

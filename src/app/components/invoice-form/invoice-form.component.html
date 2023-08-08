@@ -69,7 +69,7 @@
           </span>
         </div>
 
-        <ngb-timepicker [ngModelOptions]="{standalone: true}" id="pickupTime" [(ngModel)]="pickUpTime" [meridian]="false"></ngb-timepicker>
+        <!-- <ngb-timepicker [ngModelOptions]="{standalone: true}" id="pickupTime" [(ngModel)]="pickUpTime" [meridian]="false"></ngb-timepicker> -->
       </div>
     </div>
 
@@ -113,13 +113,7 @@
           <div class="form-floating m-2 col">
             <input type="number" class="form-control" [id]="'quantity-' +1" formControlName="quantity" placeholder="qty">
             <label [for]="'quantity-' +1">Quantity</label>
-          </div>
-
-          <!-- Quantity -->
-          <div class="form-floating m-2 col">
-            <input type="number" class="form-control" [id]="'subtotal-' +1" formControlName="subtotal" placeholder="subtotal">
-            <label [for]="'subtotal-' +1">Subtotal</label>
-          </div>
+          </div> 
 
           <!-- Remove -->
           <button type="button" (click)="removeBillItem(i)" class="btn btn-outline-danger m-2"> <i class="bi bi-x"></i> Remove</button>

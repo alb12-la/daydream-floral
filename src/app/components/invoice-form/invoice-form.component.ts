@@ -20,8 +20,9 @@ export class InvoiceFormComponent implements OnInit {
 
   // Billing Item form
   /** Should reflect a class from invoice data.model.ts */
-  invoiceFormObject =
-    {
+
+  newInvoiceFormObject() {
+    return {
       billingContactName: new FormControl(''),
       billingContactPhone: new FormControl(''),
       invoiceNumber: new FormControl('', Validators.required),
@@ -30,24 +31,27 @@ export class InvoiceFormComponent implements OnInit {
       eventDate: new FormControl(''),
       billItemsArray: new FormArray([]),
     }
+  }
 
-  billingFormObject =
-    {
+  newBillingFormObject() {
+    return {
       description: new FormControl(''),
       cost: new FormControl(''),
       quantity: new FormControl(''),
       subtotal: new FormControl(''),
     }
+  }
+
 
   ngOnInit(): void {
-    this.invoiceForm = this.fb.group(this.invoiceFormObject)
-
+    this.invoiceForm = this.fb.group(this.newInvoiceFormObject());
+    // Initialize with one bill item
     this.addBillItem();
   }
 
   addBillItem() {
     this.billItemsArray.push(
-      this.fb.group(this.billingFormObject)
+      this.fb.group(this.newBillingFormObject())
     )
   }
 

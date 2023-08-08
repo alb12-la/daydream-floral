@@ -1,115 +1,119 @@
-<div class="container mt-5">
-  <div class="d-flex flex-row justify-content-between align-items-center mb-5">
-    <img width="150px" src="../../../assets/images/daydreamfloral-black.png">
-    <h1>Invoice</h1>
-  </div>
+<div class="container p-0">
 
-
-  <div class="d-flex flex-row justify-content-between mb-3">
-    <!-- From -->
-    <div class="max-w-200">
-      <strong>Ana Karen Mosco</strong>
-      <div>(626)353-9374</div>
-      <div>mydaydreamflorals@gmail</div>
-      <div>@daydreamflorals</div>
+  <div class="top-half p-4">
+    <div class="d-flex flex-row justify-content-between align-items-center mb-5">
+      <img width="250px" src="../../../assets/images/daydreamfloral-black.png">
+      <h1>Invoice</h1>
     </div>
 
-    <!-- Bill to -->
-    <div class="max-w-200">
-      <strong>Bill To</strong>
-      <div>{{invoiceContents.billingContactName}}</div>
-      <div>{{invoiceContents.billingContactPhone}}</div>
+
+    <div class="d-flex flex-row justify-content-between mb-3">
+      <!-- From -->
+      <div class="max-w-200">
+        <strong>Ana Karen Mosco</strong>
+        <div>
+          <i class="fa fa-regular fa-phone mr-2"></i>
+          (626) 353-9374
+        </div>
+        <div>
+          <i class="fa fa-regular fa-envelope mr-2"></i>
+          mydaydreamflorals@gmail.com
+        </div>
+
+        <div>
+          <i class="fa fa-brands fa-instagram mr-2"></i>
+          @daydreamflorals
+        </div>
+      </div>
+
+      <!-- Bill to -->
+      <div class="col-4">
+        <strong>Bill To:</strong>
+        <div class="text-capitalize">{{invoiceContents.billingContactName}}</div>
+        <div>{{invoiceContents.billingContactPhone}}</div>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="d-flex flex-row justify-content-between mb-4">
+      <table class="table-sm borderless col-4">
+        <tbody>
+        </tbody>
+      </table>
+
+
+      <table class="table-sm borderless col-4">
+        <tbody>
+          <tr>
+            <th>Invoice #</th>
+            <td>{{invoiceContents.invoiceNumber}}</td>
+          </tr>
+          
+          <tr>
+            <th>Event Date:</th>
+            <td>{{invoiceContents.eventDate}}</td>
+          </tr>
+
+          <tr>
+            <th>Payment Method:</th>
+            <td>{{invoiceContents.paymentMethod}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <!-- Details -->
-  <div class="d-flex flex-row justify-content-between mb-4">
-    <table class="table-sm borderless">
-      <tbody>
-        <tr>
-          <th>Event Date:</th>
-          <td>{{invoiceContents.eventDate}}</td>
-        </tr>
-
-      </tbody>
-    </table>
-
-
-    <table class="table-sm borderless">
-      <tbody>
-        <tr>
-          <th>Invoice #</th>
-          <td>{{invoiceContents.invoiceNumber}}</td>
-        </tr>
-
-        <tr>
-          <th>Service Type:</th>
-          <td>{{invoiceContents.serviceType}}</td>
-        </tr>
-
-        <tr>
-          <th>Payment Method:</th>
-          <td>{{invoiceContents.paymentMethod}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Services -->
-  <h3>Services Rendered</h3>
-  <table class="table border">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Cost</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <ng-container *ngFor="let item of this.invoiceContents.billingItems">
-        <tr>
-          <td class="text-capitalize">{{item.description}}</td>
-          <td *ngIf="item?.cost">${{item.cost}}</td>
-          <td *ngIf="item?.discount">{{item.discount}}%</td>
-        </tr>
-      </ng-container>
-    </tbody>
-
-  </table>
-
-  <div class="d-flex justify-content-end">
-    <table class="table total-due">
+  <div class="lower-half p-4">
+    <!-- Services -->
+    <h3>Services Rendered</h3>
+    <table class="table border">
       <thead>
         <tr>
-          <th>Total Due</th>
-          <th>${{invoiceContents.totalCost}}</th>
+          <th>Item</th>
+          <th>Cost</th>
+          <th>Qty.</th>
+          <th>Subtotal</th>
         </tr>
       </thead>
+
+      <tbody>
+        <ng-container *ngFor="let item of this.invoiceContents.billingItems">
+          <tr>
+            <td class="text-capitalize">{{item.description}}</td>
+            <td *ngIf="item?.cost">${{item.cost| number:'1.2-2' }}</td>
+            <td *ngIf="item?.quantity">{{item.quantity}}</td>
+            <td *ngIf="item?.subtotal">${{item.subtotal  | number:'1.2-2' }}</td>
+            <td *ngIf="item?.discount">{{item.discount}}%</td>
+          </tr>
+        </ng-container>
+      </tbody>
+
     </table>
+
+    <div class="d-flex justify-content-end">
+      <table class="table total-due">
+        <thead>
+          <tr>
+            <th>Total Due</th>
+            <th>${{invoiceContents.totalCost | number:'1.2-2' }}</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+
+
+    <h6>Terms & Conditions/Reservation Agreement:</h6>
+    <small>
+      CONFIDENTIALITY NOTICE: This communication, including any attachments, may contain confidential and/or legally privileged information.
+      It is intended solely for the use of the named recipient(s). If you have received this communication in error, please notify the sender immediately and permanently delete the message from your
+      system.
+      Unauthorized interception, review, use, or disclosure of this communication is strictly prohibited and may violate applicable laws, including the Electronic Communications Privacy Act.
+      <br>
+      <br>
+      Additionally, the ideas, concepts, designs, and any other intellectual property shared with you during the course of our business relationship are confidential and proprietary. You agree not to
+      disclose, reproduce, or share such information with any third party without our explicit written consent. Any unauthorized use or disclosure may result in legal action.
+    </small>
   </div>
-
-
-
-  <h6>Terms & Conditions/Reservation Agreement:</h6>
-  <small>
-
-    Reservation Agreement:
-    1. All deposits are NON refundable if reservation is cancelled within 24HRS of starting.
-    2. Alberto's Transportation Services LLC is not liable in the event of mechanical breakdown while on charter and will only be responsible for making up lost time at a mutually agreed date.
-    3. The client assumes full financial liability for any damage to the limousine caused during the duration of the rental by them or any members of their party.
-    A. fee of $100.00 for each carpet or seat burn.
-    B. Sanitation fee is $350.00. Drug use is prohibited by law. Any fines will be paid for by the customer on the spot.
-    C. The driver has the right to terminate run without refund (if there is blatant indiscretion on the part of the client(s)).
-    D. It is Illegal to stand or hang through the window or emergency hatch.
-    E. Smoking is not permitted in any of our limousines and this is left to the discretion of the driver.
-    4. Overtime pay will apply after the first 15 minutes of prearranged time described on the run sheet.
-    5. Not responsible for delays or the termination in winter caused by unsafe road conditions (ie. not salted, accidents, etc.).
-    6. Not responsible for articles left in the limousine. 7. Balances to be paid to the driver on the run date before the beginning of the run.
-    8. Vehicles cannot be loaded beyond seating capacity.
-    9. If you are a farm out company and you give your business card to Alberto's Transportation Services LLC client, you are subject to forfeiture of all cost related to this pick up.
-    10.Client is responsible for all tolls and events parking fees during client reservation.
-
-  </small>
-
 
 </div>
