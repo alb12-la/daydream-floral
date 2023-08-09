@@ -12,7 +12,7 @@ import { BillItem, InvoiceContents2, InvoiceContents2Display } from 'src/models/
 })
 export class AppComponent {
   constructor(private modalService: NgbModal) { }
-  display = true;
+  display = false;
 
   InvoiceContents2: InvoiceContents2;
   invoiceContents2Display: InvoiceContents2Display;

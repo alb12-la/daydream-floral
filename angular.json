@@ -17,9 +17,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/daydream-floral",
+            "outputPath": "docs/",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "deployUrl": "/daydream-floral/",
             "polyfills": [
               "zone.js"
             ],
