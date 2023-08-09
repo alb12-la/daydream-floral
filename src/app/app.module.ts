@@ -29,7 +29,7 @@ import { APP_BASE_HREF } from '@angular/common';
     NgbModalModule,
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/daydream-floral' },
+    { provide: APP_BASE_HREF, useValue: '/daydream-floral/' },
     { provide: NgbDateParserFormatter, useClass: customNgbDateFRParserFormatter }
   ],
   bootstrap: [AppComponent]
